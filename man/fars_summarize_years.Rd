@@ -7,7 +7,7 @@
 fars_summarize_years(years)
 }
 \arguments{
-\item{years}{(\emph{character} or (\emph{integer}) ) A vector containing the desired years. 
+\item{years}{(\emph{character} or (\emph{integer}) ) A vector containing the desired years.
 Both \emph{numeric} and \emph{character} vectors are allowed for \code{years}.
 \code{years} is coerced to integer. If \code{years} cannot be coerced to integer,
 \code{fars_read_years} will result in an error as filenames cannot be created

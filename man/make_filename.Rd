@@ -7,7 +7,7 @@
 make_filename(year)
 }
 \arguments{
-\item{year}{(\emph{character} or (\emph{integer}) ) The year for which the 
+\item{year}{(\emph{character} or (\emph{integer}) ) The year for which the
 filename will be created.}
 }
 \value{

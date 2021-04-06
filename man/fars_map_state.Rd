@@ -7,10 +7,10 @@
 fars_map_state(state.num, year)
 }
 \arguments{
-\item{state.num}{(\emph{integer}) An identifier specifying the state map to be drawn. 
+\item{state.num}{(\emph{integer}) An identifier specifying the state map to be drawn.
 (see also the \href{https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/812827}{dataset documentation}) \cr
 \tabular{llll}{
-\strong{state.num} \tab \strong{State Name} \tab 
+\strong{state.num} \tab \strong{State Name} \tab
 \strong{state.num} \tab \strong{State Name} \cr
 1 \tab Alabama \tab 31 \tab Nebraska\cr
 2 \tab Alaska \tab 32 \tab Nevada\cr
@@ -41,11 +41,11 @@ fars_map_state(state.num, year)
 30 \tab Montana\cr
 }}
 
-\item{year}{(\emph{character} or (\emph{integer}) ) The year for which the 
+\item{year}{(\emph{character} or (\emph{integer}) ) The year for which the
 filename will be created.}
 }
 \description{
-Draws a map of Fatality Analysis Reporting System (FARS) incidents of a 
+Draws a map of Fatality Analysis Reporting System (FARS) incidents of a
 given \code{year} for a state.
 }
 \details{

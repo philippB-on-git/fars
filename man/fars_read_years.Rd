@@ -7,7 +7,7 @@
 fars_read_years(years)
 }
 \arguments{
-\item{years}{(\emph{character} or (\emph{integer}) ) A vector containing the desired years. 
+\item{years}{(\emph{character} or (\emph{integer}) ) A vector containing the desired years.
 Both \emph{numeric} and \emph{character} vectors are allowed for \code{years}.
 \code{years} is coerced to integer. If \code{years} cannot be coerced to integer,
 \code{fars_read_years} will result in an error as filenames cannot be created
@@ -17,7 +17,7 @@ properly.}
 A list containing the rearranged datasets for each given year.
 }
 \description{
-\code{fars_read_years} reads Fatality Analysis Reporting System (FARS) files 
+\code{fars_read_years} reads Fatality Analysis Reporting System (FARS) files
 for multiple \code{years} and rearranges the data such that each row contains
 one incident with columns \emph{MONTH} and \emph{year}.
 }

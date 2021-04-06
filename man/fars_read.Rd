@@ -13,21 +13,21 @@ fars_read(filename)
 FIBS data is returned as tibble (see \code{\link[dplyr]{tbl_df}})
 }
 \description{
-Read Fatality Analysis Reporting System (FARS) data from 
-US National Highway Traffic Safety Administration. \cr 
-\code{fars_read} reads a file defined by \code{filename} from the current 
+Read Fatality Analysis Reporting System (FARS) data from
+US National Highway Traffic Safety Administration. \cr
+\code{fars_read} reads a file defined by \code{filename} from the current
 working directory.
 }
 \details{
-If \code{fars_read} cannot find the given filename in the current 
-directory an error is thrown. It is recommended to use 
-\code{\code{make_filename}} to create a filename for a given \code{year} 
-according to the FARS filenaming scheme. \cr 
+If \code{fars_read} cannot find the given filename in the current
+directory an error is thrown. It is recommended to use
+\code{\link{make_filename}} to create a filename for a given \code{year}
+according to the FARS filenaming scheme. \cr
 \code{\link{fars_read}} is a helper function for \code{\link{fars_read_years}}
 }
 \examples{
 \dontrun{
-year <- 2014 
+year <- 2014
 df <- fars_read(make_filename(year))
 }
 

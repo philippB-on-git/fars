@@ -9,6 +9,8 @@ Imports:
     dplyr,
     tidyr,
     readr,
+    magrittr,
+    rlang,
     maps
 License: CC0
 Encoding: UTF-8
