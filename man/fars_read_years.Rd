@@ -23,7 +23,8 @@ one incident with columns \emph{MONTH} and \emph{year}.
 }
 \details{
 \emph{list} is also allowed for \code{year} but not recommended.
-Files must exist in current working directory. \cr
+Files must exist in current working directory.
+If files are not found in current working directory, execution is stopped and a warning is thrown. \cr
 \code{fars_read_years} is a helper function for \code{\link{fars_summarize_years}}.
 }
 \examples{

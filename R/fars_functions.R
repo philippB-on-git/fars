@@ -90,7 +90,8 @@ make_filename <- function(year) {
 #'
 #' @details
 #' \emph{list} is also allowed for \code{year} but not recommended.
-#' Files must exist in current working directory. \cr
+#' Files must exist in current working directory.
+#' If files are not found in current working directory, execution is stopped and a warning is thrown. \cr
 #' \code{fars_read_years} is a helper function for \code{\link{fars_summarize_years}}.
 #'
 #' @return A list containing the rearranged datasets for each given year.
@@ -115,8 +116,8 @@ fars_read_years <- function(years) {
         file <- make_filename(year)
         tryCatch({
             dat <- fars_read(file)
-            dplyr::mutate_(dat, "year" = year) %>%
-                dplyr::select_("MONTH", "year")
+            dplyr::mutate(dat, "year" = year) %>%
+                dplyr::select("MONTH", "year")
         }, error = function(e) {
             warning("invalid year: ", year)
             return(NULL)
@@ -151,18 +152,18 @@ fars_read_years <- function(years) {
 #' smry <- fars_summarize_years(list(2014, "2015"))
 #' }
 #'
-#' @importFrom dplyr bind_rows group_by_ summarize_ n
-#' @importFrom tidyr spread_
+#' @importFrom dplyr bind_rows group_by summarize n
+#' @importFrom tidyr spread
 #' @importFrom magrittr `%>%`
+#' @importFrom rlang sym
 #' @export
 fars_summarize_years <- function(years) {
     dat_list <- fars_read_years(years)
     dplyr::bind_rows(dat_list) %>%
-        dplyr::group_by_("year", "MONTH") %>%
-        dplyr::summarize_("n" = n()) %>%
-        tidyr::spread_("year", "n")
+        dplyr::group_by(!!sym("year"), !!sym("MONTH")) %>%
+        dplyr::summarize("n" = n()) %>%
+        tidyr::spread(!!sym("year"), !!sym("n"))
 }
-
 
 
 #' Create Fatality Analysis Reporting System incident map

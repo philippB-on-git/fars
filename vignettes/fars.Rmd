@@ -1,0 +1,126 @@
+---
+title: "fars"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fars}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Basics
+The fars package provides functionality to read, summarize and plot fatality Analysis Reporting System (FARS) data from the US National Highway Traffic Safety Administration^[[FARS data](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars) by US National Highway Traffic Safety Administration].  
+  
+The package comprises the following functions:  
+
+- fars_read (<span style="color:green">*helper function*</span>)
+- make_filename (<span style="color:green">*helper function*</span>)
+- fars_read_years (<span style="color:green">*helper function*</span>)
+- fars_summarize_years  
+- fars_map_state  
+  
+This package also includes example data consisting of the FARS datasets from years 2013-2015:  
+
+- accident_2013.csv.bz2
+- accident_2014.csv.bz2
+- accident_2015.csv.bz2
+
+## Helper functions
+Helper functions are used for loading FARS data into R. The functions will result in an error if the requested files do not exist in the current working directory. File loading in the `fars` package uses a certain naming convention of the FARS data files. The function `make_filename` takes the year as integer or character and returns the corresponding filename according to the naming convention. The returned filename can then be used with `fars_read` to read the file:  
+
+```{r, results='hide', echo=FALSE}
+library(fars)
+```
+
+```{r, eval=FALSE}
+library(fars)
+
+# make_filename("2013") works also
+f.name <- make_filename(2013)
+
+# read FARS dataset from year 2013, file must exists in curent working directory
+fars.data <- fars_read(f.name)    
+```
+
+The helper function `fars_read_year` combines the name creation with the loading functionality and allows to load data from multiple years with one function call. The years of which data shall be loaded are given by an integer or a character vector.
+
+```{r, eval=FALSE}
+# read FARS datasets from years 2013 and 2014 
+# files must exist in current working directory
+fars.data <- fars_read_years(c(2013, 2014))
+```
+
+## Accessing demo data
+
+To access the accompanying demo FARS datasets from years 2013, 2014 and 2015 it is recommended to copy the data into the current working directory as functions from the `fars` package require data to be available in the working directory:
+
+```{r, results='hide', warning=FALSE} 
+# current working directory
+curr.wd   <- getwd()  
+
+# create path to dataset of desired year (2013, 2014 or 2015)
+file.name <- make_filename(2013)
+file.pth  <- system.file("extdata",
+                         file.name,
+                         package = "fars")
+
+# copy demo dataset to current working directory
+file.copy(from  = file.pth, to = file.path(curr.wd, file.name))
+
+# load demo dataset 
+fars.data <- fars_read(file.name)
+```
+
+```{r, results="hide", echo=FALSE}
+file.name2 <- make_filename(2014)
+file.pth  <- system.file("extdata",
+                         file.name2,
+                         package = "fars")
+file.copy(from  = file.pth, to = file.path(curr.wd, file.name2))
+```
+
+## Summarizing fars data
+The `fars_summarize_years` function is one of the two workhorses in the `fars` package. It is used to read FARS datasets of given years and counts the accidents by month for each given year. Again the files of the specified years must exist in the current working directory.  
+The resulting dataset can be piped directly into `ggplot` to visualize the summary.
+
+```{r, warning=FALSE, fig.align='center', fig.width=5}
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(dplyr)
+})
+
+# using FARS data files of years 2013 and 2014,
+# assuming the files exist in current working directory
+fars_summarize_years(c(2013, 2014)) %>%
+  head(n = 3)
+
+# piping fars_summarize_years() output directly into ggplot
+fars_summarize_years(c(2013, 2014)) %>%
+  ggplot(., mapping = aes(x = MONTH)) +
+  geom_line(mapping = aes(y = `2013`, color = rep("2013", 12))) + 
+  geom_line(mapping = aes(y = `2014`, color = rep("2014", 12))) +
+  scale_color_discrete(name = "Year") +
+  ylab("Accidents") + xlab("Month")
+
+```
+
+## Plotting fars maps
+The second workhorse function of the `fars` package is the `fars_map_state` function which plots the location of accidents of a given year for a specified US state on a map. The state is defined by `state.num` which is an integer specifying the US state. A list of US states and the corresponding `state.num` can be found in the manual of the function (`?fars_map_state`). The data file of the specified year must exists in the current working directory following the usual FARS data naming convention. 
+
+```{r, fig.align='center', fig.width=5}
+# assuming the FARS file of year 2013 exist in current working directory
+# plot accidents in 2013 in Texas
+fars_map_state(48, 2013)
+```
+
+```{r results='hide', echo=FALSE}
+file.remove(file.path(curr.wd, file.name))
+file.remove(file.path(curr.wd, file.name2))
+```
