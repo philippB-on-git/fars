@@ -3,7 +3,7 @@ Type: Package
 Title: Fatality Analysis Reporting System data demo package
 Version: 0.1.0
 Author: Philipp B.
-Maintainer: Philipp B.
+Maintainer: Philipp B. <dummy@email.com>
 Description: A demo package to interact with Fatality Analysis Reporting System data with basic loading, summary and plotting functionality.
 Imports: 
     dplyr,
